@@ -15,7 +15,7 @@ n = 6
 data = np.zeros((n, n))
 for i in range(n):
     for j in range(n):
-        data[i][j]=np.random.randint(1, 1000)
+        data[i][j] = np.random.randint(1, 1000)
 
 print_array(data, 'Generated matrix: ')
 
