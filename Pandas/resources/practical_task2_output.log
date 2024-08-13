@@ -1,0 +1,24 @@
+/home/oshekera/git/DataEngineeringCourse/Pandas/venv/bin/python /home/oshekera/git/DataEngineeringCourse/Pandas/practical_task2.py
+
+ Filtered, grouped and with average values:
+  neighbourhood_group price_category  mean_price  mean_minimum_nights  mean_number_of_reviews  mean_availability_365  listing_count
+0            Brooklyn           High  433.168317             4.884488               48.864686             185.900990            303
+1            Brooklyn         Medium  160.894980             4.786880               61.624577             141.537111           3247
+2           Manhattan           High  515.126761             5.429577               44.825352             176.502817            710
+3           Manhattan         Medium  172.955793             5.148409               55.138207             123.767306           4117
+
+ Filtered, grouped and with average values. sorted by price and number of reviews:
+  neighbourhood_group price_category  mean_price  mean_minimum_nights  mean_number_of_reviews  mean_availability_365  listing_count
+2           Manhattan           High  515.126761             5.429577               44.825352             176.502817            710
+0            Brooklyn           High  433.168317             4.884488               48.864686             185.900990            303
+3           Manhattan         Medium  172.955793             5.148409               55.138207             123.767306           4117
+1            Brooklyn         Medium  160.894980             4.786880               61.624577             141.537111           3247
+
+ Ranked by listings and mean price:
+  neighbourhood_group price_category  mean_price  mean_minimum_nights  mean_number_of_reviews  mean_availability_365  listing_count  rank_listings  rank_price
+2           Manhattan           High  515.126761             5.429577               44.825352             176.502817            710            3.0         1.0
+0            Brooklyn           High  433.168317             4.884488               48.864686             185.900990            303            4.0         2.0
+3           Manhattan         Medium  172.955793             5.148409               55.138207             123.767306           4117            1.0         3.0
+1            Brooklyn         Medium  160.894980             4.786880               61.624577             141.537111           3247            2.0         4.0
+
+Process finished with exit code 0

@@ -1,0 +1,173 @@
+/home/oshekera/git/DataEngineeringCourse/Pandas/venv/bin/python /home/oshekera/git/DataEngineeringCourse/Pandas/practical_task1.py
+DataFrame structure:  Index(['id', 'name', 'host_id', 'host_name', 'neighbourhood_group',
+       'neighbourhood', 'latitude', 'longitude', 'room_type', 'price',
+       'minimum_nights', 'number_of_reviews', 'last_review',
+       'reviews_per_month', 'calculated_host_listings_count',
+       'availability_365'],
+      dtype='object')
+
+First 10 rows info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 10 entries, 0 to 9
+Data columns (total 16 columns):
+ #   Column                          Non-Null Count  Dtype
+---  ------                          --------------  -----
+ 0   id                              10 non-null     int64
+ 1   name                            10 non-null     object
+ 2   host_id                         10 non-null     int64
+ 3   host_name                       10 non-null     object
+ 4   neighbourhood_group             10 non-null     object
+ 5   neighbourhood                   10 non-null     object
+ 6   latitude                        10 non-null     float64
+ 7   longitude                       10 non-null     float64
+ 8   room_type                       10 non-null     object
+ 9   price                           10 non-null     int64
+ 10  minimum_nights                  10 non-null     int64
+ 11  number_of_reviews               10 non-null     int64
+ 12  last_review                     9 non-null      object
+ 13  reviews_per_month               9 non-null      float64
+ 14  calculated_host_listings_count  10 non-null     int64
+ 15  availability_365                10 non-null     int64
+dtypes: float64(3), int64(7), object(6)
+memory usage: 1.4+ KB
+None
+
+Basic dataframe info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 48895 entries, 0 to 48894
+Data columns (total 16 columns):
+ #   Column                          Non-Null Count  Dtype
+---  ------                          --------------  -----
+ 0   id                              48895 non-null  int64
+ 1   name                            48879 non-null  object
+ 2   host_id                         48895 non-null  int64
+ 3   host_name                       48874 non-null  object
+ 4   neighbourhood_group             48895 non-null  object
+ 5   neighbourhood                   48895 non-null  object
+ 6   latitude                        48895 non-null  float64
+ 7   longitude                       48895 non-null  float64
+ 8   room_type                       48895 non-null  object
+ 9   price                           48895 non-null  int64
+ 10  minimum_nights                  48895 non-null  int64
+ 11  number_of_reviews               48895 non-null  int64
+ 12  last_review                     38843 non-null  object
+ 13  reviews_per_month               38843 non-null  float64
+ 14  calculated_host_listings_count  48895 non-null  int64
+ 15  availability_365                48895 non-null  int64
+dtypes: float64(3), int64(7), object(6)
+memory usage: 6.0+ MB
+None
+
+Columns with numbers of NA values:
+last_review                       10052
+reviews_per_month                 10052
+host_name                            21
+name                                 16
+id                                    0
+host_id                               0
+neighbourhood_group                   0
+neighbourhood                         0
+latitude                              0
+longitude                             0
+room_type                             0
+price                                 0
+minimum_nights                        0
+number_of_reviews                     0
+calculated_host_listings_count        0
+availability_365                      0
+dtype: int64
+
+Input data after cleaning "name" and "host_name" empty values:
+last_review                       10052
+reviews_per_month                 10052
+id                                    0
+name                                  0
+host_id                               0
+host_name                             0
+neighbourhood_group                   0
+neighbourhood                         0
+latitude                              0
+longitude                             0
+room_type                             0
+price                                 0
+minimum_nights                        0
+number_of_reviews                     0
+calculated_host_listings_count        0
+availability_365                      0
+dtype: int64
+
+Input data after cleaning "last_review" empty values:
+last_review                       10052
+reviews_per_month                 10052
+id                                    0
+name                                  0
+host_id                               0
+host_name                             0
+neighbourhood_group                   0
+neighbourhood                         0
+latitude                              0
+longitude                             0
+room_type                             0
+price                                 0
+minimum_nights                        0
+number_of_reviews                     0
+calculated_host_listings_count        0
+availability_365                      0
+dtype: int64
+
+Input data with new "price_category" column:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 48895 entries, 0 to 48894
+Data columns (total 17 columns):
+ #   Column                          Non-Null Count  Dtype
+---  ------                          --------------  -----
+ 0   id                              48895 non-null  int64
+ 1   name                            48895 non-null  object
+ 2   host_id                         48895 non-null  int64
+ 3   host_name                       48895 non-null  object
+ 4   neighbourhood_group             48895 non-null  object
+ 5   neighbourhood                   48895 non-null  object
+ 6   latitude                        48895 non-null  float64
+ 7   longitude                       48895 non-null  float64
+ 8   room_type                       48895 non-null  object
+ 9   price                           48895 non-null  int64
+ 10  minimum_nights                  48895 non-null  int64
+ 11  number_of_reviews               48895 non-null  int64
+ 12  last_review                     38843 non-null  object
+ 13  reviews_per_month               38843 non-null  float64
+ 14  calculated_host_listings_count  48895 non-null  int64
+ 15  availability_365                48895 non-null  int64
+ 16  price_category                  48895 non-null  category
+dtypes: category(1), float64(3), int64(7), object(6)
+memory usage: 6.0+ MB
+None
+
+Input data with new "length_of_stay_category" column:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 48895 entries, 0 to 48894
+Data columns (total 18 columns):
+ #   Column                          Non-Null Count  Dtype
+---  ------                          --------------  -----
+ 0   id                              48895 non-null  int64
+ 1   name                            48895 non-null  object
+ 2   host_id                         48895 non-null  int64
+ 3   host_name                       48895 non-null  object
+ 4   neighbourhood_group             48895 non-null  object
+ 5   neighbourhood                   48895 non-null  object
+ 6   latitude                        48895 non-null  float64
+ 7   longitude                       48895 non-null  float64
+ 8   room_type                       48895 non-null  object
+ 9   price                           48895 non-null  int64
+ 10  minimum_nights                  48895 non-null  int64
+ 11  number_of_reviews               48895 non-null  int64
+ 12  last_review                     38843 non-null  object
+ 13  reviews_per_month               38843 non-null  float64
+ 14  calculated_host_listings_count  48895 non-null  int64
+ 15  availability_365                48895 non-null  int64
+ 16  price_category                  48895 non-null  category
+ 17  length_of_stay_category         48895 non-null  category
+dtypes: category(2), float64(3), int64(7), object(6)
+memory usage: 6.1+ MB
+None
+
+Process finished with exit code 0
