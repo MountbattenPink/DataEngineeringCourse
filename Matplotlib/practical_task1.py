@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import seaborn as sns
 
 ## Objective:
 # Create a visual analysis of Airbnb listings in New York City using the dataset. This task will involve
@@ -16,8 +17,9 @@ csv_path = 'resources/cleaned_airbnb_data.csv'
 data_df = pd.read_csv(csv_path, delimiter=',')
 colors = np.array(['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'])
 
-
 neighbourhood_to_listing = data_df.groupby(['neighbourhood_group']).agg(listing=('price', 'count')).reset_index()
+
+
 def create_bar_plot(keys_df, values_df):
     fig, ax = plt.subplots(figsize=(10, 5))
     bars = plt.bar(keys_df, values_df, color=colors, width=0.4)
@@ -30,6 +32,7 @@ def create_bar_plot(keys_df, values_df):
     plt.savefig(fname='resources/1_bar_listing_counts_per_neighbourhood_group.png')
     plt.close(fig)
 
+
 keys_1 = neighbourhood_to_listing['neighbourhood_group'].to_list()
 values_1 = neighbourhood_to_listing['listing'].to_list()
 
@@ -39,15 +42,19 @@ img = mpimg.imread('resources/1_bar_listing_counts_per_neighbourhood_group.png')
 plt.imshow(img)
 plt.show()
 
+
+
 # 2. Price Distribution Across Neighborhoods
 # o Plot: Generate a box plot to display the distribution of price within each neighbourhood_group.
 # o Details: Use different colors for the box plots, highlight outliers, and add appropriate titles and axis labels.
 
-neighbourhood_to_price = data_df.groupby('neighbourhood_group').agg(min_price=('price', 'min'), mean_price=('price', 'mean'), max_price=('price', 'max')).reset_index()
-
+neighbourhood_to_price = (data_df.groupby('neighbourhood_group')
+                          .agg(min_price=('price', 'min'), mean_price=('price', 'mean'), max_price=('price', 'max'))
+                          .reset_index())
 
 keys_2 = neighbourhood_to_price['neighbourhood_group'].to_list()
 values_2 = neighbourhood_to_price[['min_price', 'mean_price', 'max_price']].values.tolist()
+
 
 def create_bar_plot(keys_df, values_df):
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -56,15 +63,17 @@ def create_bar_plot(keys_df, values_df):
     plt.ylabel("MIN/MEAN/MAX prices")
     plt.title("MIN/MEAN/MAX prices per Neighbourhood Group")
     for patch, color in zip(bp['boxes'], colors): patch.set_facecolor(color)
-    for whisker in bp['whiskers']: whisker.set(color ='#8B008B', linewidth = 1.5, linestyle =":")
+    for whisker in bp['whiskers']: whisker.set(color='#8B008B', linewidth=1.5, linestyle=":")
     for flier in bp['fliers']: flier.set(marker='o', color='#e7298a', alpha=0.7)
     plt.savefig(fname='resources/2_box_prices_per_neighbourhood_group.png')
     plt.close(fig)
+
 
 create_bar_plot(keys_2, values_2)
 img = mpimg.imread('resources/2_box_prices_per_neighbourhood_group.png')
 plt.imshow(img)
 plt.show()
+
 
 
 # 3. Room Type vs. Availability
@@ -135,6 +144,7 @@ def create_scatter_plot(df):
     plt.savefig('resources/4_scatter_plot_reviews_to_price.png')
     plt.close(fig)
 
+
 create_scatter_plot(price_to_reviews)
 
 img = mpimg.imread('resources/4_scatter_plot_reviews_to_price.png')
@@ -142,12 +152,15 @@ plt.imshow(img)
 plt.show()
 
 
+
 # 5. Time Series Analysis of Reviews
 # o Plot: Create a line plot to show the trend of number_of_reviews over time (last_review) for each neighbourhood_group.
 # o Details: Use different colors for each neighborhood group, smooth the data with a
 # rolling average, and add titles, axis labels, and a legend.
 
-number_of_reviews_over_time = (data_df[data_df['last_review'].notna()][['neighbourhood_group', 'number_of_reviews', 'last_review']])
+number_of_reviews_over_time = (
+data_df[data_df['last_review'].notna()][['neighbourhood_group', 'number_of_reviews', 'last_review']])
+
 
 def create_line_plot(df):
     fig, ax = plt.subplots(figsize=(20, 20))
@@ -168,12 +181,13 @@ def create_line_plot(df):
     plt.savefig('resources/5_line_plot_reviews_to_last_review.png')
     plt.close(fig)
 
-create_line_plot(number_of_reviews_over_time)
 
+create_line_plot(number_of_reviews_over_time)
 
 img = mpimg.imread('resources/5_line_plot_reviews_to_last_review.png')
 plt.imshow(img)
 plt.show()
+
 
 
 # 6. Price and Availability Heatmap
@@ -182,6 +196,25 @@ plt.show()
 # o Details: Use a color gradient to represent the intensity of the relationship, label the
 # axes, and include a color bar for reference.
 
+price_to_availability = ((data_df[['neighbourhood_group', 'price', 'availability_365']])
+                         .groupby('neighbourhood_group')
+                         .agg(price=('price', 'mean'), availability_365=('availability_365', 'mean')))
+
+def create_heatmap(df):
+    plt.figure(figsize=(10, 5))
+    sns.heatmap(df, annot=True, fmt=".2f", cmap='YlGnBu', cbar_kws={'label': 'Mean Values'})
+    plt.title('Price and Availability Correlation by Neighbourhood Group')
+    plt.xlabel('Metrics')
+    plt.ylabel('Neighbourhood Group')
+    plt.savefig('resources/6_heatmap_price_to_availability_365.png')
+    plt.close()
+
+create_heatmap(price_to_availability)
+
+img = mpimg.imread('resources/6_heatmap_price_to_availability_365.png')
+plt.imshow(img)
+plt.show()
+
 
 
 # 7. Room Type and Review Count Analysis
@@ -189,13 +222,36 @@ plt.show()
 # room_type across the neighbourhood_group.
 # o Details: Stack the bars by room type, use different colors for each room type, and add titles, axis labels, and a legend.
 
+reviews_per_room_type = data_df[['neighbourhood_group', 'room_type', 'number_of_reviews']]
+reviews_per_room_type = (reviews_per_room_type.groupby(['neighbourhood_group', 'room_type']))[
+    'number_of_reviews'].sum().unstack()
+
+
+def create_stacked_bar_plot(df):
+    fig, ax = plt.subplots(figsize=(10, 10))
+    df.plot(kind='bar', stacked=True, ax=ax, color=colors)
+
+    ax.set_xlabel('neighbourhood_group')
+    ax.set_title('Room Type and Review Count Analysis')
+    ax.set_ylabel('number_of_reviews')
+    ax.legend(title='room_type')
+    plt.savefig('resources/7_stacked_bar_reviews_per_neighbourhood_group_and_room_type.png')
+    plt.close(fig)
+
+
+create_stacked_bar_plot(reviews_per_room_type)
+
+img = mpimg.imread('resources/7_stacked_bar_reviews_per_neighbourhood_group_and_room_type.png')
+plt.imshow(img)
+plt.show()
+
 
 # Execution and Submission:
 # • Python Script: Develop a single Python script using Matplotlib to generate all the
 # visualizations. The script should be modular, with functions dedicated to each plot.
 # • Data Preparation: Ensure the dataset is cleaned and pre-processed as necessary
 # (e.g., handling missing values, categorizing data) before visualization.
-#USED FILE FROM PREVIOUS PRACTICAL TASK: cleaned_airbnb_data.csv
+# USED FILE FROM PREVIOUS PRACTICAL TASK: cleaned_airbnb_data.csv
 
 # • Output: Save each plot as a separate image file (e.g., PNG) and also display them sequentially within the script.
 
