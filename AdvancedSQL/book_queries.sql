@@ -269,3 +269,27 @@ execute procedure tr_adjust_book_price_trigger_function();
 -- For this task, you will need to create a table called SalesArchive. The structure of this table
 -- will be the same as the Sales table.
 
+create or replace procedure sp_archive_old_sales(p_cutoff_date DATE)
+    language plpgsql
+as
+$$
+declare
+    archive_sales_curson cursor for (select sale_id,  book_id, customer_id, quantity, sale_date from sales where sale_date<p_cutoff_date);
+    archive_sale_id integer;
+    archive_book_id integer;
+    archive_sale_date date;
+    archive_customer_id  integer;
+    archive_quantity integer;
+begin
+    open archive_sales_curson;
+    loop
+        fetch next from archive_sales_curson into archive_sale_id, archive_book_id, archive_customer_id, archive_quantity, archive_sale_date;
+        exit when not found;
+        insert into salesarchive(sale_id, book_id, customer_id, quantity, sale_date) values (archive_sale_id, archive_book_id,archive_customer_id,archive_quantity, archive_sale_date);
+        delete from sales where sale_id=archive_sale_id;
+    end loop;
+    close archive_sales_curson;
+    end;
+$$;
+
+call sp_archive_old_sales(current_date)
