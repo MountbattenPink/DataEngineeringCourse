@@ -216,11 +216,11 @@ create or replace function log_trigger_function() returns trigger
         end;
     $$;
 
-    create trigger tr_log_sensitive_data_changes
+    create or replace trigger tr_log_sensitive_data_changes
     after update
     on customers
     for each row
-    execute procedure log_trigger_function()
+    execute procedure log_trigger_function();
 
 -- Task 9: Automatically Adjust Book Prices Based on Sales Volume
 -- Create a trigger that automatically increases the price of a book by 10% if the total quantity sold
@@ -229,6 +229,31 @@ create or replace function log_trigger_function() returns trigger
 -- Potential trigger name: tr_adjust_book_price
 -- Trigger Timing: AFTER INSERT
 -- Trigger Event: ON table Sales
+
+create or replace function tr_adjust_book_price_trigger_function() returns trigger
+    language plpgsql
+as $$
+    declare threshold_units integer := 10;
+begin
+    update books
+        set price = price * 1.10
+    where
+        book_id= new.book_id
+    and
+        --we need namely perform mod operation, otherwise after 10 sales, the book will become more expensive
+        --after EVERY sale (this will make polynomial rise).
+        --I think, better to rise the price after each 10 sales.
+        (select count(sale_id) from sales where sales.book_id=new.book_id) % threshold_units = 0;
+return new;
+end;
+$$;
+
+create or replace trigger tr_adjust_book_price
+    after insert
+    on sales
+    for each row
+execute procedure tr_adjust_book_price_trigger_function();
+
 
 -- Task 10: Archive Old Sales Records
 -- Create a stored procedure that uses a cursor to iterate over sales records older than a specific
