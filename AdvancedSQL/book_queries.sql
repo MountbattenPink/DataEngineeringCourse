@@ -187,7 +187,40 @@ SELECT * FROM fn_get_top_n_books_by_genre(1, 5);
 -- Trigger Timing: AFTER UPDATE
 -- Trigger Event: ON table Customers
 
+create or replace function log_trigger_function() returns trigger
+    language plpgsql
+    as $$
+        begin
+        if new.first_name is distinct from old.first_name then
+            insert into customerslog(column_name, old_value, new_value, changed_by)
+            values ('first_name',
+                    old.first_name,
+                    new.first_name,
+                    current_user);
+        end if;
+        if new.last_name is distinct from old.last_name then
+            insert into customerslog(column_name, old_value, new_value, changed_by)
+            values ('last_name',
+                    old.last_name,
+                    new.last_name,
+                    current_user);
+        end if;
+        if new.email is distinct from old.email then
+            insert into customerslog(column_name, old_value, new_value, changed_by)
+            values ('email',
+                    old.email,
+                    new.email,
+                    current_user);
+        end if;
+    return new;
+        end;
+    $$;
 
+    create trigger tr_log_sensitive_data_changes
+    after update
+    on customers
+    for each row
+    execute procedure log_trigger_function()
 
 -- Task 9: Automatically Adjust Book Prices Based on Sales Volume
 -- Create a trigger that automatically increases the price of a book by 10% if the total quantity sold
