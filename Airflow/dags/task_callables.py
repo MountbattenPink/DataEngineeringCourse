@@ -7,6 +7,9 @@ import logging
 logger = logging.getLogger("airflow.task")
 
 
+# the callable for 1 step of ETL pipeline - EXTRACT
+# reads csv file from source (with access/existence checks)
+# creates pandas dataframe from it and puts to xcom to make available for the further tasks
 def ingest_data(csv_path, **kwargs):
     if not os.path.exists(csv_path):
         raise IOError(f"Cannot find file '{csv_path}'")
@@ -22,6 +25,9 @@ def ingest_data(csv_path, **kwargs):
 
 
 
+# takes dataframe from xcom, performs some basic filtering and replacing for invalid values
+# and writes cleaned file to output folder
+# additionally, it generates sql insertion script for next load to db
 def transform(output_file_path, **kwargs):
     df_csv = kwargs['ti'].xcom_pull(key='ingested_data', task_ids='ingest_data_task')
 
@@ -37,11 +43,12 @@ def transform(output_file_path, **kwargs):
 
     data_df = data_df.loc[(data_df['latitude'].notna() & data_df['longitude'].notna())]
     data_df.to_csv(path_or_buf=output_file_path, index=False)
-    # for further quality check
+    # for further quality check task
     kwargs['ti'].xcom_push(key='transformed_data_length', value=len(data_df))
 
-    # since we already have this dataframe in memory, let's also optimize data and create sql insert script
-    # for the further loading to db:
+    # since we already have this dataframe in memory,
+    # let's also optimize data and create sql insert script here
+    # this script will be used for the further loading to db:
     data_df['name'] = data_df['name'].astype(str)
     data_df['host_name'] = data_df['host_name'].astype(str)
     data_df['neighbourhood_group'] = data_df['neighbourhood_group'].astype(str)
@@ -49,6 +56,7 @@ def transform(output_file_path, **kwargs):
 
     inserts = []
     for _, row in data_df.iterrows():
+        # some preparation for data before sql query building - mirroring special characters
         name = row['name'].replace("'", "''").replace("$", "\$")
         host_name = row['host_name'].replace("'", "''").replace("$", "\$")
         neighbourhood_group = row['neighbourhood_group'].replace("'", "''").replace("$", "\$")
@@ -72,6 +80,7 @@ def transform(output_file_path, **kwargs):
         file.write(content)
 
 
+# sanity check for db loading
 def check_quality(db_connection_id, **kwargs):
     expected_row_number = kwargs['ti'].xcom_pull(key='transformed_data_length', task_ids='transform_data_task')
     pg_hook = PostgresHook(postgres_conn_id=db_connection_id)
@@ -86,16 +95,16 @@ def check_quality(db_connection_id, **kwargs):
         raise ValueError(f"Error: some prices/minimum_nights/availability_365 are empty")
     return 'success_task'
 
+# returns error and finishes DAG execution
 def log_error():
     raise ValueError("Error found during data quality check")
 
+# used if DAG completed successfully
 def log_success_execution():
     return 'succeed'
 
 
-# 8. Implement Error Handling and Logging Failures to a File:
-# o Configure Airflow to log task failures to a local file instead of sending email notifications.
-# o Implement a failure callback function in your code that writes failure details to a log file.
+#error handling, used as 'on_failure_callback' parameter
 def log_error_to_file(context):
     task_instance = context.get('task_instance')
     error_msg = str(context.get('exception')) if context.get('exception') else ''
