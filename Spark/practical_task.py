@@ -9,7 +9,7 @@ def get_logger():
     formatter = logging.Formatter('%(levelname)s %(asctime)s %(message)s')
     logger = logging.getLogger()
     file_handler = logging.FileHandler('etl.log')
-    file_handler.setLevel(logging.WARN)
+    file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
     return logger
@@ -121,7 +121,7 @@ try:
         ORDER BY listing_count DESC
     """)
     top10_most_expensive_listings = spark.sql("""
-        SELECT name, host_id, host_name, neighbourhood_group, neighbourhood, price AS listing
+        SELECT name, host_id, host_name, neighbourhood_group, neighbourhood, price
         FROM merged_data
         ORDER BY price DESC LIMIT 10
     """)
