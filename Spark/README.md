@@ -1,7 +1,7 @@
 # PySpark ETL
 
 - [1 Running PySpark ETL](#1-running-pyspark-etl)
-- [2. Review pySpark ETL project structure](#2-review-pyspark-etl-project-structure)
+- [2. Review PySpark ETL project structure](#2-review-pyspark-etl-project-structure)
 - [3. Further optimization ideas](#3-further-optimization-ideas)
 
 This README contains the description of PySpark ETL job.
