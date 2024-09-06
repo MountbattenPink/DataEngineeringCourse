@@ -46,21 +46,27 @@ if you need to reprocess any of archived files, just delete its name from this l
 ##### processed/
 contains resulted data in PARQUET format.
 Here is the sample processed output (received after handling input AB_NYC_2019.csv):
+
 ![Alt text](resources/img/output_parquet.png)
+
 please note, that all the important columns like ```price```, ```minimum_nights_available```, ```availability_365``` have all non-empty values.
 
 
 ##### sql_queries/
 results for spark sql queries are located here as separate PARQUET files under corresponding directories:
 - average price per room type and neighbourhood group
+
+
   ![Alt text](resources/img/avg_price_per_room_type_neighbourhood_group.png)
 
 
 - top 10 listings by price
+
   ![Alt text](resources/img/top10_by_prices.png)
 
 
 - listing counts for each neighbourhood group
+
   ![Alt text](resources/img/counts_par_neighbourhood_group.png)
 
 
