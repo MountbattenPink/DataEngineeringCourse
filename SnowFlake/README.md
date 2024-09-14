@@ -2,7 +2,7 @@
 
 - [1  Initial steps to work with Snowflake](#1-initial-steps-to-run-snowflake-etl)
 - [2. Review snowflake etl project files](#2-review-snowflake-etl-project-files)
-- [3. Review snoflake etl project structure](#3-review-snowflake-etl-project-structure)
+- [3. Review snowflake etl project structure](#3-review-snowflake-etl-project-structure)
 - [4. Further optimization thoughts](#4-further-optimization-thoughts)
 
 This README contains both general data (how I installed, set up Snowflake, what problems did I have)
