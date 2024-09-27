@@ -1,8 +1,8 @@
 # Databricks AWS ETL
 
 - [1. Set up and run ingestion and transformation job](#1-set-up-and-run-ingestion-and-transformation-job)
-- [2. Review databricks etl project structure and files](#3-review-databricks-etl-project-structure-and-files)
-- [3. Common errors and optimization thoughts](#4-common-errors-and-optimization-thoughts)
+- [2. Review databricks etl project structure and files](#2-review-databricks-etl-project-structure-and-files)
+- [3. Common errors and optimization thoughts](#3-common-errors-and-optimization-thoughts)
 
 This README contains both general data (how I installed, set up Databricks, how solved some problems)
 and the description of my ETL project.
@@ -83,7 +83,7 @@ contains description of bronze/silver tables for DLT pipeline + constraints for 
 
 
 
-## 4. Common errors and optimization thoughts:
+## 3. Common errors and optimization thoughts:
 Most of problems which I saw, were about resources:
 1. A lot of resource problems on AWS for Databricks. Even if I chose quickstart and didn't create all the needed AWS resources by myself, I still spend ~$20 just in one night of developing/testing.
 2. Instance templates for cluster/job creations are very big and not suitable just for testing (minimum size - class LARGE and  2 Cores / 8 CPUs).
