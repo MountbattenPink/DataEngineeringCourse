@@ -93,5 +93,5 @@ Most of problems which I saw, were about resources:
 
 I used the smalles possible workers on jobs/clustes, tried recreating workspaces, also in different AWS regions.
 I noticed, that when I deleted some object, not all was completely deleted from AWS. 
-
+Trying to solve this, I even created one more account Databricks and Azure, hoping to not see this problem (but had to switch to AWS again because of other reasons).
 3.POTENTIAL OPTIMIZATION: currently, dependencies are installed inside notebook script. This means, every time we rerun it after some inactivity state (especially when it's scheduled daily),the libraries are downloaded and installed again. This consumes more network traffic, execution time, resources, etc. Tradeoff is that if we exclude it from notebook itself, we need to add it to each job using this Notebook. So it's suitable mostly for specific Notebooks.
