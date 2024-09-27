@@ -91,7 +91,10 @@ Most of problems which I saw, were about resources:
 
 ```Failure happened when talking to AWS, AWS API error code: VcpuLimitExceeded AWS error message: You have requested more vCPU capacity than your current vCPU limit of 8 allows for the instance bucket that the specified instance type belongs to. Please visit http://aws.amazon.com/contact-us/ec2-request to request an adjustment to this limit.```
 
-I used the smalles possible workers on jobs/clustes, tried recreating workspaces, also in different AWS regions.
-I noticed, that when I deleted some object, not all was completely deleted from AWS. 
+Official documentation says, I need to use smaller clusters or submit request to AWS support to increase limits.
+I used the smallest possible workers on jobs/clustes, tried recreating workspaces, also in different AWS regions.
+I noticed, that when I deleted some object, not always they were completely deleted from AWS.
 Trying to solve this, I even created one more account Databricks and Azure, hoping to not see this problem (but had to switch to AWS again because of other reasons).
+Also, manual cleanup AWS resources, detaching ports, terminating EC2 instances helped me at some extend. 
+
 3.POTENTIAL OPTIMIZATION: currently, dependencies are installed inside notebook script. This means, every time we rerun it after some inactivity state (especially when it's scheduled daily),the libraries are downloaded and installed again. This consumes more network traffic, execution time, resources, etc. Tradeoff is that if we exclude it from notebook itself, we need to add it to each job using this Notebook. So it's suitable mostly for specific Notebooks.
