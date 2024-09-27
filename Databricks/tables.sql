@@ -16,7 +16,7 @@ CREATE TABLE bronze_table
  minimum_nights LONG,
  reviews_per_month DOUBLE)
     USING delta
-LOCATION '/mnt/data_engineering/nyc_airbnb_db/bronze_table';
+LOCATION '/mnt/data_engineering_course/nyc_airbnb_db/bronze_table';
 
 
 CREATE TABLE silver_table
@@ -37,4 +37,4 @@ CREATE TABLE silver_table
  minimum_nights LONG,
  reviews_per_month DOUBLE)
     USING delta
-LOCATION '/mnt/data_engineering/nyc_airbnb_db/silver_table';
+LOCATION '/mnt/data_engineering_course/nyc_airbnb_db/silver_table';

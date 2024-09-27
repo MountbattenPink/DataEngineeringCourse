@@ -13,7 +13,7 @@ def bronze_table():
         .format("cloudFiles")
         .option("cloudFiles.format", "csv")
         .option("header", "true")
-        .load("dbfs:/mnt/data_engineering/nyc_airbnb_db/raw")
+        .load("dbfs:/mnt/data_engineering_course/nyc_airbnb_db/raw")
     )
 
 # Silver Table: Store transformed, clean data.
