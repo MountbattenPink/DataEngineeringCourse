@@ -130,7 +130,7 @@ so it may be not enough and so should be increased in "General Configuration" ta
     }
     ```
    
-    - add also trigger for s3:
+- add also trigger for s3:
       ![Alt text](resources/img/lambdaTrigger.png)
 
 
