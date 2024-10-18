@@ -52,32 +52,32 @@ CALCULATE(
 1. Review visualizations:
    -  Map plot: Displays listings on a map using the latitude and longitude data. Differentiate listings by room_type or price using colors or bubble sizes.
 
- ![Alt text](imgs/map-general.jpg)
+ ![Alt text](imgs/map-general.JPG)
  
    on this and all the next plots, there are also two options of filtering available: with visualization objects (slicers and filters as separate elements) and built-in filtering provided by PowerBI interface (right panel): 
- ![Alt text](imgs/map-with-filters.jpg)
+ ![Alt text](imgs/map-with-filters.JPG)
 
  - Price Analysis:Create bar or column charts that show the average price for different neighbourhood_groups and room_type. Allow users to drill down into specific neighborhoods.
 
- ![Alt text](imgs/2-avg-price.jpg)
+ ![Alt text](imgs/2-avg-price.JPG)
  
 - Availability and Minimum Nights: Create a visualization that compares the availability_365 of listings with the minimum_nights required for booking.
 
- ![Alt text](imgs/3-scatter.jpg)
+ ![Alt text](imgs/3-scatter.JPG)
   
 - Reviews Over Time: Use a line or area chart to show trends in number_of_reviews or reviews_per_month over time. You can use the last_review column to track reviews over time.
 
- ![Alt text](imgs/4-histgram.jpg)
+ ![Alt text](imgs/4-histgram.JPG)
  
 - Total Reviews per Neighborhood: Create a horizontal bar chart that shows the total number of reviews for each neighborhood. This visualization will provide insights into which neighborhoods have the most active listings based on reviews.
 
- ![Alt text](imgs/5-bar.jpg)
+ ![Alt text](imgs/5-bar.JPG)
  
 - Total Availability per Neighborhood: Create a stacked bar chart to show total availability for each neighborhood, segmented by room_type. This will help analyze which neighborhoods have the highest availability and for which type of room.
 
 
- ![Alt text](imgs/6-bar.jpg)
+ ![Alt text](imgs/6-bar.JPG)
  
 - Average Price per Neighborhood: Create a bar chart to show the average price for each neighborhood. This visualization will help analyze which neighborhoods are the most expensive.
 
- ![Alt text](imgs/7-bar.jpg)
+ ![Alt text](imgs/7-bar.JPG)
