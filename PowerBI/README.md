@@ -67,7 +67,7 @@ CALCULATE(
   
 - Reviews Over Time: Use a line or area chart to show trends in number_of_reviews or reviews_per_month over time. You can use the last_review column to track reviews over time.
 
- ![Alt text](imgs/4-histgram.JPG)
+ ![Alt text](imgs/4-histogram.JPG)
  
 - Total Reviews per Neighborhood: Create a horizontal bar chart that shows the total number of reviews for each neighborhood. This visualization will provide insights into which neighborhoods have the most active listings based on reviews.
 
